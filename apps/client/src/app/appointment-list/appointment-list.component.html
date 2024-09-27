@@ -1,0 +1,9 @@
+<ul>
+  @for (appointment of appointments$ | async; track appointment) {
+  <li>
+    <a routerLink="{{ appointment.id }}"
+      >{{ appointment.date }} - {{ appointment.time }}</a
+    >
+  </li>
+  }
+</ul>

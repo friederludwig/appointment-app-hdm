@@ -1,0 +1,9 @@
+@if(appointment | async; as resolvedAppointment) {
+<app-appointment-detail-view
+  [appointment]="resolvedAppointment"
+  (appointmentUpdated)="onUpdate($event)"
+  (appointmentDeleted)="onDelete($event)"
+></app-appointment-detail-view>
+} @else {
+<p>Appointment wurde nicht gefunden.</p>
+}
