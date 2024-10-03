@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  Post,
 } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { Appointment } from '@appointment-app-hdm/api-interfaces';
@@ -22,6 +23,15 @@ export class AppointmentController {
   @Get(':id')
   GetById(@Param('id', ParseIntPipe) id: number) {
     return this.AppointmentService.getById(id);
+  }
+
+  @Post()
+  async createAppointment(
+    @Body() body: { appointment: Partial<Appointment> }
+  ): Promise<Appointment> {
+    const appointmentData = body.appointment;
+    console.log(appointmentData);
+    return this.AppointmentService.create(appointmentData);
   }
 
   @Patch(':id')

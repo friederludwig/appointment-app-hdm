@@ -8,7 +8,7 @@ import { Appointment } from '@appointment-app-hdm/api-interfaces';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './appointment-detail-view.component.html',
-  styleUrl: './appointment-detail-view.component.css',
+  styleUrl: './appointment-detail-view.component.scss',
 })
 export class AppointmentDetailViewComponent implements OnInit {
   @Input() appointment!: Appointment;

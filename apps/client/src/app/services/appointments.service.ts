@@ -18,6 +18,12 @@ export class AppointmentsService {
   getById(id: number) {
     return this.httpClient.get<Appointment>(`/api/appointment/${id}`);
   }
+  create(appointment: Appointment) {
+    return this.httpClient.post<Appointment>('/api/appointment', {
+      appointment,
+    });
+  }
+
   updateById(id: number, updateData: Partial<Appointment>) {
     return this.httpClient.patch<Appointment>(
       `/api/appointment/${id}`,

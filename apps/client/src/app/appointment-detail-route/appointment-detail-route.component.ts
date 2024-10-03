@@ -10,7 +10,7 @@ import { AppointmentDetailViewComponent } from '../appointment-detail-view/appoi
   standalone: true,
   imports: [CommonModule, AppointmentDetailViewComponent],
   templateUrl: './appointment-detail-route.component.html',
-  styleUrl: './appointment-detail-route.component.css',
+  styleUrl: './appointment-detail-route.component.scss',
 })
 export class AppointmentDetailRouteComponent implements OnInit {
   appointment!: Observable<Appointment>;
