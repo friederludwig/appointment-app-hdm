@@ -1,0 +1,22 @@
+@import "../../variables";
+
+.sidebar {
+  .inner {
+    padding: 1.5rem 1rem;
+  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $sidebarWidth;
+  height: 100dvh;
+  background-color: $colorTertiary;
+
+  nav {
+    margin-top: 2rem;
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}

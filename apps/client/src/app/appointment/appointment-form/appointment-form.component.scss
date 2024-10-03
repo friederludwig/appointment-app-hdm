@@ -1,0 +1,25 @@
+@import "../../../variables";
+
+.form {
+  border-radius: 5px;
+  max-width: 500px;
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.5rem 0;
+
+    label {
+      font-size: 0.9rem;
+    }
+    input,
+    select {
+      padding: 0.5rem 0.5rem;
+      border-radius: 5px;
+      border: 2px solid $colorSecondary;
+    }
+  }
+  &__submit {
+    margin-top: 0.5rem;
+  }
+}

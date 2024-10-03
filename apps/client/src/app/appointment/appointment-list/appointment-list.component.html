@@ -1,5 +1,6 @@
 <div>
   <h2>Appointments</h2>
+  <a routerLink="/appointment/create">New appointment</a>
   <ul class="appointmentList">
     @for (appointment of appointments$ | async; track appointment) {
     <li class="appointmentList__item">

@@ -1,30 +1,35 @@
-<form [formGroup]="form" (submit)="submit()">
-  <div>
+@if(appointment) {
+<div>
+  <button (click)="delete()">Löschen</button>
+</div>
+}
+<form class="form" [formGroup]="form" (submit)="submit()">
+  <div class="form__field">
     <label for="date">Date:</label>
     <input id="date" formControlName="date" type="date" />
   </div>
 
-  <div>
+  <div class="form__field">
     <label for="time">Time:</label>
     <input id="time" formControlName="time" type="time" />
   </div>
 
-  <div>
+  <div class="form__field">
     <label for="status">Status:</label>
     <input id="status" formControlName="status" type="text" />
   </div>
 
-  <div>
+  <div class="form__field">
     <label for="vehicleRegNo">Vehicle Registration No:</label>
     <input id="vehicleRegNo" formControlName="vehicleRegNo" type="text" />
   </div>
 
-  <div>
+  <div class="form__field">
     <label for="vehicleOwner">Vehicle Owner:</label>
     <input id="vehicleOwner" formControlName="vehicleOwner" type="text" />
   </div>
 
-  <div>
+  <div class="form__field">
     <label for="branch">Branch:</label>
     <select id="branch" formControlName="branch">
       <option value="Dortmund">Dortmund</option>
@@ -32,7 +37,7 @@
     </select>
   </div>
 
-  <div>
+  <div class="form__field">
     <label for="assignment">Assignment:</label>
     <input id="assignment" formControlName="assignment" type="text" />
   </div>
@@ -41,8 +46,7 @@
   <small style="color: red"> Out of timerange </small>
   }
 
-  <button type="submit">Save Appointment</button>
+  <div class="form__submit">
+    <app-button type="submit" label="Save"></app-button>
+  </div>
 </form>
-<div>
-  <button (click)="delete()">Löschen</button>
-</div>

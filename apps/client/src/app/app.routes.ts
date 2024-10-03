@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
-import { AppointmentListComponent } from './appointment-list/appointment-list.component';
-import { AppointmentDetailRouteComponent } from './appointment-detail-route/appointment-detail-route.component';
-import { AppointmentCreateRouteComponent } from './appointment-create-route/appointment-create-route.component';
+import { AppointmentCreateRouteComponent } from './appointment/appointment-create-route/appointment-create-route.component';
+import { AppointmentListComponent } from './appointment/appointment-list/appointment-list.component';
+import { AppointmentDetailRouteComponent } from './appointment/appointment-detail-route/appointment-detail-route.component';
 
 export const appRoutes: Route[] = [
   { path: 'appointments', component: AppointmentListComponent },

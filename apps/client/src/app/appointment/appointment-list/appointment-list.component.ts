@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Appointment } from '@appointment-app-hdm/api-interfaces';
 import { Observable } from 'rxjs';
-import { AppointmentsService } from '../services/appointments.service';
+import { AppointmentsService } from '../../services/appointments.service';
 
 @Component({
   selector: 'app-appointment-list',
