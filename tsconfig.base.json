@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@appointment-app-hdm/api-interfaces": ["api-interfaces/src/index.ts"]
+      "@appointment-app-hdm/api-interfaces": ["api-interfaces/src/index.ts"],
+      "@appointment-app-hdm/shared": ["shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

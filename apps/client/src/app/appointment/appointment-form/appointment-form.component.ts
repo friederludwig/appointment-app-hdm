@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Appointment } from '@appointment-app-hdm/api-interfaces';
 import { ButtonComponent } from '../../button/button.component';
+import { OpeningHoursValidatorService } from '../../services/opening-hours-validator.service';
 
 @Component({
   selector: 'app-appointment-form',
@@ -19,7 +20,9 @@ export class AppointmentFormComponent implements OnInit {
 
   form!: FormGroup;
 
-  //constructor() {} // private readonly openingHoursValidatorService: OpeningHoursValidatorService
+  constructor(
+    private readonly openingHoursValidatorService: OpeningHoursValidatorService
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup(
@@ -34,22 +37,17 @@ export class AppointmentFormComponent implements OnInit {
       },
       null,
       [
-        /*  this.openingHoursValidatorService.openingHoursValidator(
+        this.openingHoursValidatorService.openingHoursValidator(
           'time',
           'branch'
-        ), */
+        ),
       ]
     );
-
-    const formattedAppointment = {
-      ...this.appointment,
-      date: this.formatDate(this.appointment?.date || ''),
-    };
-    this.form.patchValue(formattedAppointment);
+    this.form.patchValue(this.appointment);
   }
 
   submit() {
-    //if (this.form.valid) return;
+    if (this.form.invalid) return;
 
     if (this.appointment?.id) {
       const updatedAppointment = this.form.value as Partial<Appointment>;
@@ -68,10 +66,5 @@ export class AppointmentFormComponent implements OnInit {
     if (confirm) {
       this.appointmentDeleted.emit(this.appointment.id);
     }
-  }
-
-  private formatDate(dateString: string): string {
-    const [day, month, year] = dateString.split('-');
-    return `${year}-${month}-${day}`;
   }
 }
