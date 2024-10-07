@@ -1,0 +1,87 @@
+<div class="wrapper">
+  <div class="header">
+    <div>
+      <h2>{{ title }}</h2>
+    </div>
+    @if(appointment) {
+    <div>
+      <button class="btnDelete" (click)="delete()">delete</button>
+    </div>
+    }
+  </div>
+  <form class="form" [formGroup]="form" (submit)="submit()">
+    <div class="form__field" [ngClass]="{ error: fieldError('date') }">
+      <label for="date">Date</label>
+      <input id="date" formControlName="date" type="date" />
+      @if (fieldError('date') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div
+      class="form__field"
+      [ngClass]="{error: fieldError('time') || this.form.errors?.['openingHours']}"
+    >
+      <label for="time">Time</label>
+      <input id="time" formControlName="time" type="time" />
+      @if (this.form.errors?.['openingHours']) {
+      <small class="error">{{this.form.errors?.['openingHours']}}</small>
+      } @if (fieldError('time') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div class="form__field" [ngClass]="{ error: fieldError('status') }">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="" disabled>Select status</option>
+        @for(status of statusOptions; track status) {
+        <option [value]="status">{{ status }}</option>
+        }
+      </select>
+      @if (fieldError('status') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div class="form__field" [ngClass]="{ error: fieldError('vehicleRegNo') }">
+      <label for="vehicleRegNo">Vehicle Registration No</label>
+      <input id="vehicleRegNo" formControlName="vehicleRegNo" type="text" />
+      @if (fieldError('vehicleRegNo') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div class="form__field" [ngClass]="{ error: fieldError('vehicleOwner') }">
+      <label for="vehicleOwner">Vehicle Owner</label>
+      <input id="vehicleOwner" formControlName="vehicleOwner" type="text" />
+      @if (fieldError('vehicleOwner') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div class="form__field" [ngClass]="{ error: fieldError('branch') }">
+      <label for="branch">Branch</label>
+      <select id="branch" formControlName="branch">
+        <option value="" disabled>Select branch</option>
+        <option value="Dortmund">Dortmund</option>
+        <option value="Berlin">Berlin</option>
+      </select>
+      @if (fieldError('branch') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div class="form__field" [ngClass]="{ error: fieldError('assignment') }">
+      <label for="assignment">Assignment</label>
+      <input id="assignment" formControlName="assignment" type="text" />
+      @if (fieldError('assignment') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+
+    <div class="form__submit">
+      <app-button type="submit" label="Save"></app-button>
+    </div>
+  </form>
+</div>

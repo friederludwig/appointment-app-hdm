@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <h2>Appointments</h2>
+  <!--   <a routerLink="/appointment/create">New appointment</a> -->
+  <ul class="appointmentList">
+    @for (appointment of appointments$ | async; track appointment) {
+    <li class="appointmentList__item">
+      <a routerLink="{{ appointment.id }}">
+        <span>{{ appointment.time }} Uhr </span>
+        <span>{{ appointment.date }}</span>
+        <span>
+          {{ appointment.status }}
+        </span>
+        <span>{{ appointment.branch }}</span>
+        <span>{{ appointment.vehicleOwner }}</span>
+        <span>{{ appointment.vehicleRegNo }}</span>
+      </a>
+    </li>
+    }
+  </ul>
+</div>

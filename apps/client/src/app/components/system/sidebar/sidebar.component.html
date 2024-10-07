@@ -1,0 +1,17 @@
+@if(isAuthenticated()) {
+<div class="sidebar">
+  <span id="logo">Easy Appointments</span>
+  <div class="inner">
+    <nav>
+      <ul>
+        @for (link of navigation; track link.id) {
+        <li>
+          <a routerLink="{{ link.route }}">{{ link.title }}</a>
+        </li>
+        }
+      </ul>
+    </nav>
+    <button class="btnLogout" (click)="logout()">Logout</button>
+  </div>
+</div>
+}

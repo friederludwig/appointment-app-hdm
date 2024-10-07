@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './components/system/sidebar/sidebar.component';
 
 @Component({
   standalone: true,

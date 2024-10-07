@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { AppointmentEntity } from '../../entities/appointment.entity';
+import { UserEntity } from '../../entities/user.entity';
 
 export const DatabaseProvider = {
   provide: 'DATA_SOURCE',
@@ -11,7 +12,8 @@ export const DatabaseProvider = {
       username: 'dev_user',
       password: 'Admin123',
       database: 'appointment-db',
-      entities: [AppointmentEntity],
+      // entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [AppointmentEntity, UserEntity],
       synchronize: true,
     });
 

@@ -7,19 +7,20 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { Appointment } from '@appointment-app-hdm/api-interfaces';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('appointment')
 export class AppointmentController {
   constructor(private readonly AppointmentService: AppointmentService) {}
-
+  @UseGuards(JwtAuthGuard)
   @Get()
   GetData() {
     return this.AppointmentService.getAll();
   }
-
   @Get(':id')
   GetById(@Param('id', ParseIntPipe) id: number) {
     return this.AppointmentService.getById(id);
