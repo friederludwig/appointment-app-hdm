@@ -9,12 +9,12 @@ export interface Appointment {
   assignment: string;
 }
 
-export interface OpeningHours {
+export interface Branch {
+  id?: number;
+  city: string;
   openingHoursStart: string;
   openingHoursEnd: string;
 }
-
-export type OpeningHoursPerBranch = Record<string, OpeningHours>;
 
 export interface User {
   id?: number;
