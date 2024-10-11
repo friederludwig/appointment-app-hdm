@@ -20,8 +20,9 @@ export class BranchesService {
   }
 
   updateById(id: number, updateData: Partial<Branch>) {
-    console.log('heys');
-    return this.httpClient.patch<Branch>(`/api/branches/${id}`, { updateData });
+    return this.httpClient.patch<Partial<Branch>>(`/api/branches/${id}`, {
+      updateData,
+    });
   }
 
   deleteById(id: number) {

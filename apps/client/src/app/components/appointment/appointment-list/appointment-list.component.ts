@@ -18,21 +18,22 @@ export class AppointmentListComponent {
 
   constructor(
     private readonly appointmentsService: AppointmentsService,
-    private readonly branchService: BranchesService
+    private readonly branchesService: BranchesService
   ) {
     this.appointments$ = this.appointmentsService.getAll();
 
-    const branch1: Branch = {
-      id: 3,
-      city: 'Memmingen',
-      openingHoursStart: '09:00',
-      openingHoursEnd: '11:00',
-    };
+    // const branch1: Branch = {
+    //   id: 3,
+    //   city: 'Memmingen',
+    //   openingHoursStart: '09:00',
+    //   openingHoursEnd: '11:00',
+    // };
 
-    this.branchService.getById(3).subscribe((result) => console.log(result));
+    // this.branchesService.getById(3).subscribe((result) => console.log(result));
 
-    this.branchService.deleteById(3);
-    // this.branchService.updateById(3, branch1).subscribe((result) => {
+    // this.branchesService.deleteById(3);
+
+    // this.branchesService.updateById(3, branch1).subscribe((result) => {
     //   console.log(result);
     // });
   }
