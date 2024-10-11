@@ -1,15 +1,42 @@
 <div class="wrapper">
   <h2>Appointments</h2>
-  <!--   <a routerLink="/appointment/create">New appointment</a> -->
+
+  <!-- Branch Filter Buttons -->
+  <div class="filter-buttons">
+    <span>Filter by Branch:</span>
+    <button (click)="onBranchFilterChange(false)">All</button>
+    @for(branch of branches; track branch) {
+    <button
+      (click)="onBranchFilterChange(branch)"
+      [class.active]="branch === selectedBranch"
+    >
+      {{ branch }}
+    </button>
+    }
+  </div>
+
+  <!-- Status Filter Buttons -->
+  <div class="filter-buttons">
+    <span>Filter by Status:</span>
+    <button (click)="onStatusFilterChange(false)">All</button>
+    @for(status of states | keyvalue; track status) {
+    <button
+      (click)="onStatusFilterChange(status.value)"
+      [class.active]="status.value === selectedStatus"
+    >
+      {{ status.value }}
+    </button>
+    }
+  </div>
+
+  <!-- Terminliste -->
   <ul class="appointmentList">
-    @for (appointment of appointments$ | async; track appointment) {
+    @for(appointment of appointments$ | async; track appointment) {
     <li class="appointmentList__item">
-      <a routerLink="{{ appointment.id }}">
+      <a [routerLink]="[appointment.id]">
         <span>{{ appointment.time }} Uhr </span>
         <span>{{ appointment.date }}</span>
-        <span>
-          {{ appointment.status }}
-        </span>
+        <span>{{ appointment.status }}</span>
         <span>{{ appointment.branch }}</span>
         <span>{{ appointment.vehicleOwner }}</span>
         <span>{{ appointment.vehicleRegNo }}</span>

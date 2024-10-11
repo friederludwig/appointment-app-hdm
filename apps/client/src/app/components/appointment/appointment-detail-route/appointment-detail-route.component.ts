@@ -4,12 +4,12 @@ import { Appointment } from '@appointment-app-hdm/api-interfaces';
 import { Observable } from 'rxjs';
 import { AppointmentFormComponent } from '../appointment-form/appointment-form.component';
 import { AppointmentsService } from '../../../services/appointments/appointments.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-appointment-detail-route',
   standalone: true,
-  imports: [CommonModule, AppointmentFormComponent],
+  imports: [CommonModule, AppointmentFormComponent, RouterLink],
   templateUrl: './appointment-detail-route.component.html',
 })
 export class AppointmentDetailRouteComponent implements OnInit {

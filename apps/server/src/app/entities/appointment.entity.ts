@@ -25,4 +25,7 @@ export class AppointmentEntity {
 
   @Column({ type: 'text' })
   assignment: string;
+
+  @Column({ type: 'int' })
+  createdByUser: number;
 }

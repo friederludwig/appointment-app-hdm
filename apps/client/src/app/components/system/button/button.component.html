@@ -1,1 +1,3 @@
-<button (click)="handleClick()" type="{{ type }}">{{ label }}</button>
+<button [disabled]="disabled" (click)="handleClick()" type="{{ type }}">
+  {{ label }}
+</button>

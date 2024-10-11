@@ -3,7 +3,7 @@
     <div>
       <h2>{{ title }}</h2>
     </div>
-    @if(appointment) {
+    @if(appointment && userAllowUpdate) {
     <div>
       <button class="btnDelete" (click)="delete()">delete</button>
     </div>
@@ -31,18 +31,20 @@
       }
     </div>
 
+    @if (appointment) {
     <div class="form__field" [ngClass]="{ error: fieldError('status') }">
       <label for="status">Status</label>
       <select id="status" formControlName="status">
         <option value="" disabled>Select status</option>
-        @for(status of statusOptions; track status) {
-        <option [value]="status">{{ status }}</option>
+        @for(status of statusOptions | keyvalue; track status) {
+        <option [value]="status.value">{{ status.value }}</option>
         }
       </select>
       @if (fieldError('status') ) {
       <small class="error">Required field</small>
       }
     </div>
+    }
 
     <div class="form__field" [ngClass]="{ error: fieldError('vehicleRegNo') }">
       <label for="vehicleRegNo">Vehicle Registration No</label>
@@ -81,7 +83,11 @@
     </div>
 
     <div class="form__submit">
-      <app-button type="submit" label="Save"></app-button>
+      <app-button
+        [disabled]="!userAllowUpdate || form.invalid"
+        type="submit"
+        label="Save"
+      ></app-button>
     </div>
   </form>
 </div>

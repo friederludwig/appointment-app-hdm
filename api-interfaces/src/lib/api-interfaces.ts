@@ -7,6 +7,7 @@ export interface Appointment {
   vehicleOwner: string;
   branch: string;
   assignment: string;
+  createdByUser: number;
 }
 
 export interface OpeningHours {
@@ -28,4 +29,15 @@ export interface LoginResponse {
   access_token: string;
   token_type: string;
   expires_in: number;
+}
+
+export enum UserRoles {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
+export enum AppointmentStatusOptions {
+  PENDING = 'Pending',
+  CONFIRMED = 'Confirmed',
+  CANCELLED = 'Cancelled',
 }
