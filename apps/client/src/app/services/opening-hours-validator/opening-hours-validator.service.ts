@@ -16,10 +16,10 @@ export class OpeningHoursValidatorService {
   ): AsyncValidatorFn {
     return (group: AbstractControl) => {
       const time = group.get(timeControlName)?.value;
-      const branchId = group.get(branchIdControlName)?.value as string;
+      const city = group.get(branchIdControlName)?.value as string;
       return this.branchessService.getAll().pipe(
         first(),
-        map((perBranch) => perBranch[branchId]),
+        map((perBranch) => perBranch.find((b) => b.city === city)),
         map((openingHoursOfBranch) => {
           console.log('validate::', openingHoursOfBranch);
           if (time == null || openingHoursOfBranch == null) {
