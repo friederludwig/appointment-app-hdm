@@ -33,6 +33,6 @@ export class AppointmentsService {
     );
   }
   deleteById(id: number) {
-    return this.httpClient.delete<boolean>(`/api/appointment/${id}`);
+    return this.httpClient.delete<void>(`/api/appointment/${id}`);
   }
 }
