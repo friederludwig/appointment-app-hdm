@@ -3,7 +3,7 @@
 .sidebar {
   .inner {
     padding: 1rem;
-    height: 100dvh;
+    height: 97dvh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -14,9 +14,9 @@
   width: $sidebarWidth;
   height: 100dvh;
   background-color: $colorTertiary;
+  margin-top: 3rem;
 
   nav {
-    margin-top: 3rem;
     ul {
       display: flex;
       flex-direction: column;
@@ -27,21 +27,10 @@
       }
     }
   }
-
-  .btnLogout {
-    background-color: transparent;
-    border: 2px solid $colorSecondary;
-    border-radius: 4px;
-    padding: 0.4rem 0.8rem;
-
-    &:hover {
-      background-color: darken($color: $colorTertiary, $amount: 5);
-    }
-  }
 }
 
 #logo {
-  background-color: $colorPrimary;
+  background-color: $colorSecondary;
   position: fixed;
   top: 0;
   left: 0;
@@ -50,4 +39,39 @@
   font-weight: 700;
   color: $colorWhite;
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.userpanel {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  background: darken($color: $colorTertiary, $amount: 4);
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__btnLogout {
+    background-color: transparent;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+    background-color: darken($color: $colorTertiary, $amount: 10);
+    transition: all 0.3s;
+
+    i {
+      transform: scaleX(-1);
+    }
+
+    &:hover {
+      background-color: darken($color: $colorTertiary, $amount: 18);
+    }
+  }
 }

@@ -27,3 +27,7 @@ export function validateUserPermissionsForAppointment(
 ) {
   return user.role === UserRoles.ADMIN || user.id === appointment.createdByUser;
 }
+
+export function validateUserPermissionsForBranch(user: User) {
+  return user.role === UserRoles.ADMIN;
+}

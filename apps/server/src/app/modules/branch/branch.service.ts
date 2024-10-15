@@ -4,17 +4,6 @@ import { Repository } from 'typeorm';
 import { BranchEntity } from '../../entities/branch.entity';
 import { NotFoundException } from '@nestjs/common';
 
-// export const openingHoursPerBranch: OpeningHoursPerBranch = {
-//   Berlin: {
-//     openingHoursStart: '08:00',
-//     openingHoursEnd: '16:00',
-//   },
-//   Dortmund: {
-//     openingHoursStart: '07:00',
-//     openingHoursEnd: '20:00',
-//   },
-// };
-
 @Injectable()
 export class BranchService {
   constructor(
@@ -26,14 +15,8 @@ export class BranchService {
     return this.branchRepository.find();
   }
 
-  getById(id: number): Promise<Branch[]> {
-    const branch = this.branchRepository.find({ where: { id } });
-    return branch.then((result) => {
-      if (result.length > 1) {
-        console.log(`Mehr als ein Object mit id ${id}`);
-      }
-      return result;
-    });
+  getById(id: number): Promise<Branch> {
+    return this.branchRepository.findOne({ where: { id } });
   }
 
   async updateById(id: number, branch: Partial<Branch>): Promise<Branch> {

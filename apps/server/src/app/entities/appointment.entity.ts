@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BranchEntity } from './branch.entity';
 @Entity('appointment')
 export class AppointmentEntity {
   @PrimaryGeneratedColumn()
@@ -21,11 +21,11 @@ export class AppointmentEntity {
   vehicleOwner: string;
 
   @Column({ type: 'text' })
-  branch: string;
-
-  @Column({ type: 'text' })
   assignment: string;
 
   @Column({ type: 'int' })
   createdByUser: number;
+
+  @ManyToOne(() => BranchEntity, (branch) => branch.appointments)
+  branch: BranchEntity;
 }

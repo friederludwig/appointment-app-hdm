@@ -16,12 +16,11 @@ export class OpeningHoursValidatorService {
   ): AsyncValidatorFn {
     return (group: AbstractControl) => {
       const time = group.get(timeControlName)?.value;
-      const city = group.get(branchIdControlName)?.value as string;
+      const cityId = group.get(branchIdControlName)?.value as string;
       return this.branchessService.getAll().pipe(
         first(),
-        map((perBranch) => perBranch.find((b) => b.city === city)),
+        map((perBranch) => perBranch.find((b) => b.id === parseInt(cityId))),
         map((openingHoursOfBranch) => {
-          console.log('validate::', openingHoursOfBranch);
           if (time == null || openingHoursOfBranch == null) {
             return { openingHours: 'Could not find time or opening hours' };
           }
@@ -33,7 +32,7 @@ export class OpeningHoursValidatorService {
           )
             ? null
             : {
-                openingHours: `time is outside of the business hours (${openingHoursOfBranch.openingHoursStart} – ${openingHoursOfBranch.openingHoursEnd})`,
+                openingHours: `time is outside of the business hours for branch ${openingHoursOfBranch.city} (${openingHoursOfBranch.openingHoursStart} – ${openingHoursOfBranch.openingHoursEnd})`,
               };
         })
       );

@@ -1,8 +1,8 @@
-<a routerLink="/appointments">Back</a>
-@if(appointment | async; as resolvedAppointment) {
+@if(appointment$ | async; as resolvedAppointment;) {
 <app-appointment-form
   title="Appointment"
   [appointment]="resolvedAppointment"
+  [branches]="branches$ | async"
   (appointmentUpdated)="onUpdate($event)"
   (appointmentDeleted)="onDelete($event)"
 ></app-appointment-form>

@@ -1,0 +1,9 @@
+@if(branch$ | async; as resolvedBranch;) {
+<app-branch-form
+  title="Branch"
+  [branch]="resolvedBranch"
+  (branchUpdated)="onUpdate($event)"
+></app-branch-form>
+} @else {
+<p>Branch wurde nicht gefunden.</p>
+}

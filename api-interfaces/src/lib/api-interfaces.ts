@@ -5,13 +5,13 @@ export interface Appointment {
   status: string;
   vehicleRegNo: string;
   vehicleOwner: string;
-  branch: string;
   assignment: string;
   createdByUser: number;
+  branch: Branch;
 }
 
 export interface Branch {
-  id?: number;
+  id: number;
   city: string;
   openingHoursStart: string;
   openingHoursEnd: string;
@@ -40,4 +40,6 @@ export enum AppointmentStatusOptions {
   PENDING = 'Pending',
   CONFIRMED = 'Confirmed',
   CANCELLED = 'Cancelled',
+  IN_PROGRESS = 'In Progress',
+  DONE = 'Done',
 }

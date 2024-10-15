@@ -1,15 +1,33 @@
 <div class="wrapper">
+  <button (click)="navigateBack()" class="navigateBtn">
+    <i class="pi pi-arrow-left" style="font-size: 1.5rem"></i>
+  </button>
   <div class="header">
     <div>
       <h2>{{ title }}</h2>
     </div>
-    @if(appointment && userAllowUpdate) {
+    @if(appointment && userHasPermissions) {
     <div>
       <button class="btnDelete" (click)="delete()">delete</button>
     </div>
     }
   </div>
   <form class="form" [formGroup]="form" (submit)="submit()">
+    @if (appointment) {
+    <div class="form__field" [ngClass]="{ error: fieldError('status') }">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="" disabled>Select status</option>
+        @for(status of statusOptions | keyvalue; track status) {
+        <option [value]="status.value">{{ status.value }}</option>
+        }
+      </select>
+      @if (fieldError('status') ) {
+      <small class="error">Required field</small>
+      }
+    </div>
+    }
+
     <div class="form__field" [ngClass]="{ error: fieldError('date') }">
       <label for="date">Date</label>
       <input id="date" formControlName="date" type="date" />
@@ -31,21 +49,6 @@
       }
     </div>
 
-    @if (appointment) {
-    <div class="form__field" [ngClass]="{ error: fieldError('status') }">
-      <label for="status">Status</label>
-      <select id="status" formControlName="status">
-        <option value="" disabled>Select status</option>
-        @for(status of statusOptions | keyvalue; track status) {
-        <option [value]="status.value">{{ status.value }}</option>
-        }
-      </select>
-      @if (fieldError('status') ) {
-      <small class="error">Required field</small>
-      }
-    </div>
-    }
-
     <div class="form__field" [ngClass]="{ error: fieldError('vehicleRegNo') }">
       <label for="vehicleRegNo">Vehicle Registration No</label>
       <input id="vehicleRegNo" formControlName="vehicleRegNo" type="text" />
@@ -66,8 +69,9 @@
       <label for="branch">Branch</label>
       <select id="branch" formControlName="branch">
         <option value="" disabled>Select branch</option>
-        <option value="Dortmund">Dortmund</option>
-        <option value="Berlin">Berlin</option>
+        @for(branch of branches; track branch) {
+        <option [value]="branch.id">{{ branch.city }}</option>
+        }
       </select>
       @if (fieldError('branch') ) {
       <small class="error">Required field</small>
@@ -84,10 +88,16 @@
 
     <div class="form__submit">
       <app-button
-        [disabled]="!userAllowUpdate || form.invalid"
+        [disabled]="!userHasPermissions || form.invalid"
         type="submit"
         label="Save"
       ></app-button>
+      @if(!userHasPermissions) {
+      <span class="info"
+        >Nur der <b>Ersteller</b> oder <b>Admin</b> kann diesen Eintrag
+        ändern.</span
+      >
+      }
     </div>
   </form>
 </div>

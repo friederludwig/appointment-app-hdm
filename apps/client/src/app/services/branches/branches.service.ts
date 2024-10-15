@@ -12,7 +12,7 @@ export class BranchesService {
   }
 
   getById(id: number) {
-    return this.httpClient.get<Branch[]>(`/api/branches/${id}`);
+    return this.httpClient.get<Branch>(`/api/branches/${id}`);
   }
 
   create(branch: Branch) {

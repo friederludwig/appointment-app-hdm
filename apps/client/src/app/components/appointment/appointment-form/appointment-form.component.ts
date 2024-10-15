@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormControl,
@@ -9,6 +9,7 @@ import {
 import {
   Appointment,
   AppointmentStatusOptions,
+  Branch,
 } from '@appointment-app-hdm/api-interfaces';
 import { validateUserPermissionsForAppointment } from '@appointment-app-hdm/shared';
 import { OpeningHoursValidatorService } from '../../../services/opening-hours-validator/opening-hours-validator.service';
@@ -25,17 +26,19 @@ import { ButtonComponent } from '../../system/button/button.component';
 export class AppointmentFormComponent implements OnInit {
   @Input() title!: string;
   @Input() appointment!: Appointment;
+  @Input() branches!: Branch[] | null;
   @Output() appointmentUpdated = new EventEmitter<Partial<Appointment>>();
   @Output() appointmentDeleted = new EventEmitter<number>();
   @Output() appointmentCreate = new EventEmitter<Appointment>();
 
   form!: FormGroup;
   statusOptions = AppointmentStatusOptions;
-  userAllowUpdate = false;
+  userHasPermissions = false;
 
   constructor(
     private readonly openingHoursValidatorService: OpeningHoursValidatorService,
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class AppointmentFormComponent implements OnInit {
       {
         date: new FormControl('', [Validators.required]),
         time: new FormControl('', [Validators.required]),
-        status: new FormControl('', [Validators.required]),
+        status: new FormControl('', []),
         vehicleRegNo: new FormControl('', [Validators.required]),
         vehicleOwner: new FormControl('', [Validators.required]),
         branch: new FormControl('', [Validators.required]),
@@ -59,17 +62,18 @@ export class AppointmentFormComponent implements OnInit {
     );
 
     if (this.appointment) {
-      this.form.patchValue(this.appointment);
-    }
-
-    if (!this.appointment) {
-      this.userAllowUpdate = true;
+      this.form.patchValue({
+        ...this.appointment,
+        branch: this.appointment.branch.id,
+      });
+    } else {
+      this.userHasPermissions = true;
     }
 
     const currentUser = this.userService.getCurrentUser();
 
     if (currentUser) {
-      this.userAllowUpdate = validateUserPermissionsForAppointment(
+      this.userHasPermissions = validateUserPermissionsForAppointment(
         this.appointment,
         currentUser
       );
@@ -78,19 +82,26 @@ export class AppointmentFormComponent implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      if (this.userAllowUpdate && this.appointment?.id) {
+      const branch = this.branches?.find(
+        (b) => b.id === parseInt(this.form.controls['branch'].value)
+      );
+
+      if (this.userHasPermissions && this.appointment?.id) {
         const updatedAppointment = this.form.value as Partial<Appointment>;
         this.appointmentUpdated.emit({
           id: this.appointment.id,
           ...updatedAppointment,
+          branch,
         });
       } else {
         const newAppointment = this.form.value as Appointment;
         const currentUser = this.userService.getCurrentUser();
-        if (currentUser?.id) {
+        if (currentUser?.id && branch) {
           this.appointmentCreate.emit({
             ...newAppointment,
             createdByUser: currentUser.id,
+            status: AppointmentStatusOptions.PENDING,
+            branch,
           });
         }
       }
@@ -113,5 +124,9 @@ export class AppointmentFormComponent implements OnInit {
       this.form.get(control)?.invalid &&
       (this.form.get(control)?.touched || this.form.get(control)?.dirty)
     );
+  }
+
+  navigateBack(): void {
+    this.location.back();
   }
 }

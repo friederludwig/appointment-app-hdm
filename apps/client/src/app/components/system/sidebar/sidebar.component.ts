@@ -16,13 +16,13 @@ export class SidebarComponent implements OnInit {
   navigation = [
     {
       id: 0,
-      route: '/appointment/create',
-      title: 'New Appointment',
+      route: '/appointments',
+      title: 'Appointments',
     },
     {
       id: 1,
-      route: '/appointments',
-      title: 'Appointments',
+      route: '/branches',
+      title: 'Branches',
     },
   ];
   currentUser!: User | null;
@@ -35,8 +35,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.getCurrentUser();
-
-    console.log(this.currentUser);
   }
 
   logout() {

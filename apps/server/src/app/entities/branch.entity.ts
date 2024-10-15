@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { AppointmentEntity } from './appointment.entity';
 
 @Entity('branch')
 export class BranchEntity {
@@ -13,4 +14,7 @@ export class BranchEntity {
 
   @Column()
   openingHoursEnd: string;
+
+  @OneToMany(() => AppointmentEntity, (appointment) => appointment.branch)
+  appointments?: AppointmentEntity[];
 }

@@ -4,10 +4,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   Appointment,
   AppointmentStatusOptions,
+  Branch,
 } from '@appointment-app-hdm/api-interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppointmentsService } from '../../../services/appointments/appointments.service';
+import { BranchesService } from '../../../services/branches/branches.service';
 
 @Component({
   selector: 'app-appointment-list',
@@ -19,7 +21,7 @@ import { AppointmentsService } from '../../../services/appointments/appointments
 export class AppointmentListComponent implements OnInit {
   appointments$!: Observable<Appointment[]>;
 
-  branches: string[] = ['Berlin', 'Dortmund'];
+  branches: Branch[] = [];
   selectedBranch: string | false = false;
 
   states = AppointmentStatusOptions;
@@ -27,6 +29,7 @@ export class AppointmentListComponent implements OnInit {
 
   constructor(
     private readonly appointmentsService: AppointmentsService,
+    private readonly branchesService: BranchesService,
     private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {}
@@ -37,6 +40,10 @@ export class AppointmentListComponent implements OnInit {
       this.selectedStatus = params['status'] || false;
       this.loadAppointments();
     });
+
+    this.branchesService.getAll().subscribe((branches) => {
+      this.branches = branches;
+    });
   }
 
   filterAppointments(
@@ -44,8 +51,10 @@ export class AppointmentListComponent implements OnInit {
     branch: string | false,
     status: string | false
   ): Appointment[] {
+    console.log(appointments);
     return appointments.filter((appointment) => {
-      const matchesBranch = branch === false || appointment.branch === branch;
+      const matchesBranch =
+        branch === false || appointment.branch.city == branch;
       const matchesStatus = status === false || appointment.status === status;
       return matchesBranch && matchesStatus;
     });
@@ -65,8 +74,8 @@ export class AppointmentListComponent implements OnInit {
       );
   }
 
-  onBranchFilterChange(branch: string | false) {
-    this.selectedBranch = branch;
+  onBranchFilterChange(branch?: string | false) {
+    this.selectedBranch = branch ? branch : false;
     this.updateUrlParams();
   }
 
@@ -84,5 +93,9 @@ export class AppointmentListComponent implements OnInit {
       },
       queryParamsHandling: 'merge', // keep existing params
     });
+  }
+
+  getStatusCssClass(value: string) {
+    return value.replace(/\s+/g, '').toLowerCase();
   }
 }

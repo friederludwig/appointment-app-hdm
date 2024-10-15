@@ -1,6 +1,9 @@
-@if(isAuthenticated()) {
+@if(isAuthenticated() && currentUser) {
 <div class="sidebar">
-  <span id="logo">Easy Appointments</span>
+  <span id="logo"
+    ><i class="pi pi-wrench" style="font-size: 0.95rem"></i>KFZ
+    Appointment</span
+  >
   <div class="inner">
     <nav>
       <ul>
@@ -11,7 +14,17 @@
         }
       </ul>
     </nav>
-    <button class="btnLogout" (click)="logout()">Logout</button>
+    <div class="userpanel">
+      <div class="userpanel__user">
+        <button class="userpanel__btnLogout" (click)="logout()">
+          <i class="pi pi-sign-out" style="font-size: 1rem"></i>
+        </button>
+        <div>
+          <div>{{ currentUser.username }}</div>
+          <div>[{{ currentUser.role }}]</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 }
