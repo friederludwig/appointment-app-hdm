@@ -19,13 +19,19 @@ export class BranchService {
     return this.branchRepository.findOne({ where: { id } });
   }
 
-  async updateById(id: number, branch: Partial<Branch>): Promise<Branch> {
+  async updateById(
+    id: number,
+    updatedBranch: Partial<Branch>
+  ): Promise<Branch> {
     const oldBranch = await this.branchRepository.findOne({ where: { id } });
 
     if (!oldBranch) {
       throw new NotFoundException(`Branch with ID ${id} not found`);
     }
-    const patchedBranch: Branch = { ...oldBranch, ...branch };
+    const patchedBranch: Branch = { ...oldBranch, ...updatedBranch };
+    console.log(patchedBranch);
+    console.log(oldBranch);
+    console.log(updatedBranch);
     return this.branchRepository.save(patchedBranch);
   }
 

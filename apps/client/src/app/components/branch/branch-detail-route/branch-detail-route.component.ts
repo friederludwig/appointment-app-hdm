@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Branch } from '@appointment-app-hdm/api-interfaces';
 import { Observable } from 'rxjs';
 import { BranchFormComponent } from '../branch-form/branch-form.component';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-branch-detail-route',
@@ -19,7 +20,8 @@ export class BranchDetailRouteComponent implements OnInit {
 
   constructor(
     private branchesService: BranchesService,
-    private router: Router
+    private router: Router,
+    private readonly toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -32,11 +34,13 @@ export class BranchDetailRouteComponent implements OnInit {
         .updateById(updatedBranch.id, updatedBranch)
         .subscribe();
     }
+    this.toastService.showToast('Branch geupdated.');
   }
 
   onDelete(id: number) {
     this.branchesService.deleteById(id).subscribe(() => {
       this.router.navigate(['/branches']);
+      this.toastService.showToast('Branch gelöscht.');
     });
   }
 }

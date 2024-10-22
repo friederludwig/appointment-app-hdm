@@ -70,7 +70,7 @@ $gridCols: repeat(7, 1fr);
     }
 
     a {
-      padding: 1.2rem 1rem;
+      padding: 1.25rem 1rem;
       text-decoration: none;
       font-size: 1rem;
       color: $colorBlack;
@@ -150,21 +150,15 @@ $gridCols: repeat(7, 1fr);
     }
   }
   &--confirmed {
-    background-color: rgba($colorSuccess, 0.1);
-    .led {
-      background-color: $colorSuccess;
-    }
-  }
-  &--inprogress {
     background-color: rgba($colorSecondary, 0.1);
     .led {
       background-color: $colorSecondary;
     }
   }
   &--done {
-    background-color: rgba($colorGray, 1);
+    background-color: rgba($colorSuccess, 0.1);
     .led {
-      background-color: #fff;
+      background-color: $colorSuccess;
     }
   }
 }

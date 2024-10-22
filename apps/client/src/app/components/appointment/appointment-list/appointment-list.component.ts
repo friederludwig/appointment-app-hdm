@@ -51,7 +51,6 @@ export class AppointmentListComponent implements OnInit {
     branch: string | false,
     status: string | false
   ): Appointment[] {
-    console.log(appointments);
     return appointments.filter((appointment) => {
       const matchesBranch =
         branch === false || appointment.branch.city == branch;

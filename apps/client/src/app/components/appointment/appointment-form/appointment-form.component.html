@@ -7,9 +7,10 @@
       <h2>{{ title }}</h2>
     </div>
     @if(appointment && userHasPermissions) {
-    <div>
-      <button class="btnDelete" (click)="delete()">delete</button>
-    </div>
+    <button class="btnDelete" (click)="delete()">
+      <i class="pi pi-trash"></i>
+      <span> Delete </span>
+    </button>
     }
   </div>
   <form class="form" [formGroup]="form" (submit)="submit()">
@@ -85,19 +86,17 @@
       <small class="error">Required field</small>
       }
     </div>
-
+    @if(!userHasPermissions) {
+    <span class="info">
+      Only the <b>creator</b> or <b>admin</b> can edit this entry.
+    </span>
+    }
     <div class="form__submit">
       <app-button
         [disabled]="!userHasPermissions || form.invalid"
         type="submit"
         label="Save"
       ></app-button>
-      @if(!userHasPermissions) {
-      <span class="info"
-        >Nur der <b>Ersteller</b> oder <b>Admin</b> kann diesen Eintrag
-        ändern.</span
-      >
-      }
     </div>
   </form>
 </div>

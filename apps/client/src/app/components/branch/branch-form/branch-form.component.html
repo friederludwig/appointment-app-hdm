@@ -47,16 +47,17 @@
       <small class="error">Required field</small>
       }
     </div>
-
+    @if(!userHasPermissions) {
+    <span class="info">
+      Only the <b>admin</b> can create or edit a branch.
+    </span>
+    }
     <div class="form__submit">
       <app-button
         [disabled]="form.invalid || !userHasPermissions"
         type="submit"
         label="Save"
       ></app-button>
-      @if(!userHasPermissions) {
-      <span class="info">Nur der <b>Admin</b> kann diesen Eintrag ändern.</span>
-      }
     </div>
   </form>
 </div>

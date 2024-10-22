@@ -111,9 +111,7 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   delete() {
-    const confirm = window.confirm(
-      `Are you shure you want to delte: ${this.appointment.assignment}`
-    );
+    const confirm = window.confirm(`Are you shure you want to delte?`);
     if (confirm) {
       this.appointmentDeleted.emit(this.appointment.id);
     }

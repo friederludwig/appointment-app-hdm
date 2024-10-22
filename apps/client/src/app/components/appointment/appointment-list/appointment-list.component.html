@@ -8,7 +8,7 @@
     <!-- Branch Filter Buttons -->
     <div class="filter__buttons">
       <div>Standort:</div>
-      <button (click)="onBranchFilterChange(false)">Alle</button>
+      <button (click)="onBranchFilterChange(false)">All</button>
       @for(branch of branches; track branch) {
       <button
         (click)="onBranchFilterChange(branch.city)"
@@ -22,7 +22,7 @@
     <!-- Status Filter Buttons -->
     <div class="filter__buttons">
       <div>Status:</div>
-      <button (click)="onStatusFilterChange(false)">Alle</button>
+      <button (click)="onStatusFilterChange(false)">All</button>
       @for(status of states | keyvalue; track status) {
       <button
         (click)="onStatusFilterChange(status.value)"

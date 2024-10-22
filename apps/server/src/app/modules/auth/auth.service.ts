@@ -1,17 +1,19 @@
+import { User } from '@appointment-app-hdm/api-interfaces';
+import {
+  validateUserPermissionsForAppointment,
+  validateUserPermissionsForBranch,
+} from '@appointment-app-hdm/shared';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
 import { AppointmentService } from '../appointment/appointment.service';
-import { BranchService } from '../branch/branch.service';
-import { User } from '@appointment-app-hdm/api-interfaces';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-    private appointmentService: AppointmentService,
-    private branchService: BranchService
+    private appointmentService: AppointmentService
   ) {}
 
   async validateUser(email: string, pass: string) {
@@ -35,52 +37,50 @@ export class AuthService {
     };
   }
 
-  async validateTokenAndOwnership(
+  async validateOwnership(
     token: string,
     entityId: number,
     entityType: 'appointment' | 'branch'
   ) {
-    const decoded = this.jwtService.decode(token);
+    const decodedUser = this.jwtService.decode(token) as User;
 
-    if (
-      !decoded ||
-      typeof decoded !== 'object' ||
-      !decoded['id'] ||
-      !decoded['role']
-    ) {
+    if (!decodedUser || typeof decodedUser !== 'object') {
       throw new UnauthorizedException('Invalid token');
     }
 
-    const userIdFromToken = decoded['id'];
-    const userRole = decoded['role'];
-
-    if (userRole === 'admin') {
-      return true;
-    }
-
+    // Appointment validation
     if (entityType === 'appointment') {
       const appointment = await this.appointmentService.getById(entityId);
-
       if (!appointment) {
         throw new UnauthorizedException('Appointment not found');
       }
+      const isValid = validateUserPermissionsForAppointment(
+        appointment,
+        decodedUser
+      );
 
-      if (appointment.createdByUser !== userIdFromToken) {
+      if (!isValid) {
         throw new UnauthorizedException(
           'You are not authorized to update this appointment'
         );
       }
-    } else if (entityType === 'branch') {
-      const branch = await this.branchService.getById(entityId);
-
-      if (!branch) {
-        throw new UnauthorizedException('Branch not found');
-      }
-      throw new UnauthorizedException(
-        'Only admins are authorized to update branches'
-      );
     }
-
+    // Branch validation
+    if (entityType === 'branch') {
+      const isValid = validateUserPermissionsForBranch(decodedUser);
+      if (!isValid) {
+        throw new UnauthorizedException(
+          'Only admins are authorized to update branches'
+        );
+      }
+    }
     return true;
+  }
+
+  getRequestToken(authHeader: string) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('No token provided');
+    }
+    return authHeader.split(' ')[1];
   }
 }

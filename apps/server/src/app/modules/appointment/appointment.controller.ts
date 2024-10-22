@@ -1,3 +1,4 @@
+import { Appointment } from '@appointment-app-hdm/api-interfaces';
 import {
   Body,
   Controller,
@@ -8,13 +9,11 @@ import {
   Patch,
   Post,
   Req,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { AppointmentService } from './appointment.service';
-import { Appointment } from '@appointment-app-hdm/api-interfaces';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AuthService } from '../auth/auth.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { AppointmentService } from './appointment.service';
 
 @Controller('appointment')
 export class AppointmentController {
@@ -46,17 +45,8 @@ export class AppointmentController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAppointment: Partial<Appointment>
   ) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('No token provided');
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    // Verwende AuthService, um die Berechtigungen für das Appointment zu überprüfen
-    await this.authService.validateTokenAndOwnership(token, id, 'appointment');
-
-    // Wenn die Überprüfung erfolgreich war, wird das Appointment aktualisiert
+    const token = this.authService.getRequestToken(req.headers.authorization);
+    await this.authService.validateOwnership(token, id, 'appointment');
     return this.appointmentService.updateById(id, updateAppointment);
   }
 

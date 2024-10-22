@@ -9,12 +9,11 @@ import {
   Patch,
   Post,
   Req,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
+import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { BranchService } from './branch.service';
-import { AuthService } from '../auth/auth.service';
 
 @Controller('branches')
 export class BranchController {
@@ -47,14 +46,8 @@ export class BranchController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBranch: Partial<Branch>
   ) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('No token provided');
-    }
-
-    const token = authHeader.split(' ')[1];
-    await this.authService.validateTokenAndOwnership(token, id, 'branch');
-
+    const token = this.authService.getRequestToken(req.headers.authorization);
+    await this.authService.validateOwnership(token, id, 'branch');
     return this.branchService.updateById(id, updateBranch);
   }
 

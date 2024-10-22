@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AppointmentsService } from '../../../services/appointments/appointments.service';
 import { BranchesService } from '../../../services/branches/branches.service';
 import { AppointmentFormComponent } from '../appointment-form/appointment-form.component';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-appointment-detail-route',
@@ -21,7 +22,8 @@ export class AppointmentDetailRouteComponent implements OnInit {
   constructor(
     private appointmentsService: AppointmentsService,
     private branchesService: BranchesService,
-    private router: Router
+    private router: Router,
+    private readonly toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -35,11 +37,13 @@ export class AppointmentDetailRouteComponent implements OnInit {
         .updateById(updatedAppointment.id, updatedAppointment)
         .subscribe();
     }
+    this.toastService.showToast('Appointment geupdated.');
   }
 
   onDelete(id: number) {
     this.appointmentsService.deleteById(id).subscribe(() => {
       this.router.navigate(['/appointments']);
+      this.toastService.showToast('Appointment gelöscht.');
     });
   }
 }

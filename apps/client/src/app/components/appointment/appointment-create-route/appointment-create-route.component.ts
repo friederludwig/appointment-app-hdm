@@ -6,6 +6,7 @@ import { AppointmentsService } from '../../../services/appointments/appointments
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BranchesService } from '../../../services/branches/branches.service';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-appointment-create-route',
@@ -19,7 +20,8 @@ export class AppointmentCreateRouteComponent implements OnInit {
   constructor(
     private readonly appointmentsService: AppointmentsService,
     private readonly branchesService: BranchesService,
-    private router: Router
+    private readonly router: Router,
+    private readonly toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class AppointmentCreateRouteComponent implements OnInit {
   onCreate(candidate: Appointment) {
     this.appointmentsService.create(candidate).subscribe((newAppointment) => {
       this.router.navigate([`/appointments/${newAppointment.id}`]);
+      this.toastService.showToast('Appointment gespeichert.');
     });
   }
 }

@@ -74,17 +74,17 @@ input:-webkit-autofill:active {
   }
   &__submit {
     margin-top: 0.5rem;
+  }
 
-    .info {
-      font-size: 0.9rem;
-      padding: 0.8rem;
-      border-radius: 4px;
-      text-align: center;
-      margin-top: 1rem;
-      background-color: rgba($colorWarning, 0.1);
-      display: block;
-      color: $colorWarning;
-    }
+  .info {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    background-color: rgba($colorWarning, 0.1);
+    display: block;
+    color: $colorWarning;
   }
 
   .error {

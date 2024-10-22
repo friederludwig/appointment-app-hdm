@@ -18,7 +18,7 @@ export class AppointmentService {
     return this.appointmentRepository.find({
       relations: ['branch'],
       order: {
-        date: 'DESC', // oder 'DESC' für absteigende Sortierung
+        date: 'DESC',
       },
     });
   }
